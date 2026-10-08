@@ -1,0 +1,41 @@
+from django.contrib import admin
+from django.contrib.auth import views as auth
+from django.urls import path
+from django.shortcuts import redirect
+from studio import views, api
+urlpatterns=[
+ path('',lambda request:redirect('brands')),
+ path('login/',auth.LoginView.as_view(template_name='studio/login.html'),name='login'),
+ path('logout/',auth.LogoutView.as_view(),name='logout'),
+ path('admin/',admin.site.urls),
+ path('brands/',views.brands,name='brands'),
+ path('brands/new/',views.create_brand,name='create_brand'),
+ path('brands/<int:brand_id>/',views.workspace,name='workspace'),
+ path('brands/<int:brand_id>/products/',views.products,name='products'),
+ path('brands/<int:brand_id>/products/import/',views.import_products,name='import_products'),
+ path('brands/<int:brand_id>/products/sync/',views.sync_products,name='sync_products'),
+ path('brands/<int:brand_id>/characters/',views.characters,name='characters'),
+ path('brands/<int:brand_id>/characters/<int:character_id>/references/',views.reference,name='reference'),
+ path('brands/<int:brand_id>/edit/<str:kind>/',views.edit_record,name='create_record'),
+ path('brands/<int:brand_id>/edit/<str:kind>/<int:record_id>/',views.edit_record,name='edit_record'),
+ path('brands/<int:brand_id>/concepts/',views.concepts,name='concepts'),
+ path('brands/<int:brand_id>/concepts/<int:concept_id>/generate/',views.generate_concept,name='generate_concept'),
+ path('brands/<int:brand_id>/daily/',views.daily_batch,name='daily_batch'),
+ path('brands/<int:brand_id>/queue/',views.queue,name='queue'),
+ path('brands/<int:brand_id>/generations/<uuid:generation_id>/',views.generation_detail,name='generation'),
+ path('brands/<int:brand_id>/generations/<uuid:generation_id>/regenerate/',views.regenerate,name='regenerate'),
+ path('brands/<int:brand_id>/generations/<uuid:generation_id>/retry/',views.retry_job,name='retry_job'),
+ path('brands/<int:brand_id>/generations/<uuid:generation_id>/export/',views.export_image,name='export_image'),
+ path('brands/<int:brand_id>/calendar/',views.calendar,name='calendar'),
+ path('brands/<int:brand_id>/assets/',views.assets,name='assets'),
+ path('brands/<int:brand_id>/assets/<int:asset_id>/file/',views.asset_file,name='asset_file'),
+ path('brands/<int:brand_id>/settings/',views.settings_page,name='settings'),
+ path('brands/<int:brand_id>/members/',views.add_member,name='add_member'),
+ path('brands/<int:brand_id>/history/',views.history,name='history'),
+ path('api/brands/',api.brands_api,name='api_brands'),
+ path('api/brands/<int:brand_id>/',api.brands_api,name='api_brand'),
+ path('api/brands/<int:brand_id>/actions/<str:kind>/',api.action,name='api_action'),
+ path('api/brands/<int:brand_id>/actions/<str:kind>/<str:record_id>/',api.action,name='api_record_action'),
+ path('api/brands/<int:brand_id>/<str:kind>/',api.resource,name='api_resource'),
+ path('api/brands/<int:brand_id>/<str:kind>/<str:record_id>/',api.resource,name='api_record'),
+]

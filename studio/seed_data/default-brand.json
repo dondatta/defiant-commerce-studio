@@ -1,0 +1,149 @@
+{
+  "brand": {
+    "name": "Infatuation Apparel",
+    "slug": "infatuation-apparel",
+    "logo": "",
+    "description": "Social-commerce fashion. Confident, current and aspirational.",
+    "website": "",
+    "timezone": "America/New_York",
+    "status": "ACTIVE",
+    "brand_voice": "Confident, current, playful and attainable.",
+    "visual_style": "Photorealistic social-commerce fashion; confident, sexy, current. Realistic influencer photography in believable lifestyle locations.",
+    "target_customer": "Adult fashion customers looking for current going-out and lifestyle outfits.",
+    "content_guidelines": "Adult characters only. Accurate clothing, natural proportions and realistic skin. Keep the garment clearly visible.",
+    "negative_prompt": "plain studio backgrounds, runway posing, distorted anatomy, inaccurate hands and legs, oversized heads, plastic skin, excessive retouching, text, fake logos, unrealistic environments"
+  },
+  "settings": {
+    "preferred_locations": "sunlit rooftop terrace\nboutique hotel lobby\ncoastal cafe patio\ncity sidewalk\nresort garden\nprivate dining terrace\nmarina boardwalk\nflower market\npalm-lined courtyard\nart gallery entrance\ncity apartment balcony\nbeachside promenade",
+    "photography_style": "Realistic influencer photography",
+    "preferred_model_types": "Approved adult fashion characters",
+    "image_ratio": "4:5",
+    "prohibited_content": "",
+    "caption_tone": "Confident and current",
+    "preferred_poses": "walking naturally\nleaning on a railing\nseated candidly\nturning toward the camera\nstanding with relaxed hands\nlooking over one shoulder",
+    "generation_enabled": false,
+    "daily_count": 3,
+    "generation_time": "09:00:00",
+    "cooldown_days": 3,
+    "max_product_repeats": 3,
+    "minimum_spacing_days": 1
+  },
+  "characters": [
+    {
+      "name": "Nyla",
+      "description": "Adult fashion persona. Define appearance from approved reference images before use.",
+      "height_build": "",
+      "hair": "",
+      "skin_tone": "",
+      "facial_description": "",
+      "consistency_instructions": "Preserve face and full-body identity from approved references across outfits and environments.",
+      "lora_model_id": "",
+      "seed": null,
+      "conditioning": {},
+      "approved": false,
+      "active": true
+    }
+  ],
+  "categories": [
+    {
+      "name": "Date Night",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "Going Out",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "Brunch",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "Street Style",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "Vacation",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "Resort",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "Poolside",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "Nightlife",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "Casual",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "Hotel",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "Travel",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "Product Focus",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "Lifestyle",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "New Arrival",
+      "direction": "",
+      "active": true
+    },
+    {
+      "name": "Best Seller",
+      "direction": "",
+      "active": true
+    }
+  ],
+  "components": [
+    {
+      "key": "requirements",
+      "text": "Use a vertical 4:5 Instagram composition with natural body proportions, realistic skin texture, accurate hands and legs, detailed fabric, believable environmental lighting, and subtle depth of field. Clothing must remain a primary visual focal point."
+    },
+    {
+      "key": "daily_mix_1",
+      "text": "Product-focused, high-conversion social image. Prioritize garment visibility and accurate clothing detail."
+    },
+    {
+      "key": "daily_mix_2",
+      "text": "Lifestyle influencer image. Natural candid moment and relatable setting."
+    },
+    {
+      "key": "daily_mix_3",
+      "text": "Aspirational fashion image. Stronger creative direction while remaining believable social content."
+    }
+  ],
+  "templates": [
+    {
+      "name": "Instagram fashion",
+      "template": "Create a photorealistic Instagram fashion image.\nBrand style: {brand_style}\nCharacter identity: {character}\nProduct/outfit: {product}\nContent category: {category}\nShe is {pose} at {location}.\nCamera: {camera}\nLighting: {lighting}\nComposition: {composition}\n{requirements}\nGuidelines: {guidelines}\nThe scene should look like real fashion influencer content rather than a traditional ecommerce studio photograph.",
+      "active": true
+    }
+  ]
+}
