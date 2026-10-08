@@ -36,4 +36,8 @@ Shopify JSON imports upsert by brand/external IDs, including variants, images an
 
 ## Production boundary
 
-This is a working local milestone, not a production deployment. PostgreSQL and S3 adapters are implemented but not exercised against real infrastructure. Deployment requires a production WSGI server/reverse proxy, TLS, private bucket IAM, secret provisioning, backup/monitoring, migrations, process supervision, rate limits and storage retention. Password reset/invitation email, OAuth onboarding and social publishing are not implemented. No production resources were created and no real generation charges were incurred during verification.
+This is a working local milestone, not a production deployment. PostgreSQL has been exercised in the Docker development stack, including all 48 tests and tenant/history triggers. S3 is implemented but has not been exercised against real infrastructure. Deployment requires a production WSGI server/reverse proxy, TLS, private bucket IAM, secret provisioning, backup/monitoring, migrations, process supervision, rate limits and storage retention. Password reset/invitation email, OAuth onboarding and social publishing are not implemented. No production resources were created and no real generation charges were incurred during verification.
+
+## Docker development
+
+Dockerfile and compose.yaml provide Python 3.12, PostgreSQL 17, setup, web, worker and scheduler services. Private assets and PostgreSQL use separate persistent volumes. Development traffic binds to loopback; DEBUG is enabled for the development server. The setup service applies migrations and idempotent seed configuration before app processes start. See DOCKER.md for local configuration, secure secret initialization, readiness, updates, access and production boundaries.

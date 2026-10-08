@@ -1,0 +1,86 @@
+name: defiant-commerce-studio-dev
+
+x-app: &app
+  build: .
+  image: defiant-commerce-studio:dev
+  env_file: .env
+  environment:
+    DEBUG: "1"
+    DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY:?Run python3 scripts/init_docker_env.py first}
+    ALLOWED_HOSTS: ${ALLOWED_HOSTS:-localhost,127.0.0.1}
+    POSTGRES_DB: ${POSTGRES_DB:-defiant_studio}
+    POSTGRES_USER: ${POSTGRES_USER:-defiant}
+    POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python3 scripts/init_docker_env.py first}
+    POSTGRES_HOST: db
+    POSTGRES_PORT: "5432"
+    STORAGE_BACKEND: local
+    PRIVATE_STORAGE_ROOT: /app/.private
+  volumes:
+    - private_assets:/app/.private
+  read_only: true
+  tmpfs:
+    - /tmp:size=128m,mode=1777
+  cap_drop:
+    - ALL
+  security_opt:
+    - no-new-privileges:true
+
+services:
+  db:
+    image: postgres:17-bookworm
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-defiant_studio}
+      POSTGRES_USER: ${POSTGRES_USER:-defiant}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Run python3 scripts/init_docker_env.py first}
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U \"$$POSTGRES_USER\" -d \"$$POSTGRES_DB\""]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+    restart: unless-stopped
+
+  setup:
+    <<: *app
+    command: ["sh", "-ec", "python manage.py migrate --noinput && python manage.py seed_studio && python manage.py check"]
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  web:
+    <<: *app
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000", "--noreload"]
+    ports:
+      - "127.0.0.1:${APP_PORT:-8000}:8000"
+    depends_on:
+      setup:
+        condition: service_completed_successfully
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8000/login/', timeout=3).read()"]
+      interval: 10s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+    restart: unless-stopped
+
+  worker:
+    <<: *app
+    command: ["python", "manage.py", "worker"]
+    depends_on:
+      setup:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+  scheduler:
+    <<: *app
+    command: ["python", "manage.py", "scheduler"]
+    depends_on:
+      setup:
+        condition: service_completed_successfully
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+  private_assets:

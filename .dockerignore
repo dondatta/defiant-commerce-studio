@@ -1,0 +1,15 @@
+.git
+.venv
+.env
+.env.*
+!.env.example
+!.env.docker.example
+.private
+.static
+*.sqlite3
+*.sqlite3-*
+*.log
+__pycache__
+**/__pycache__
+*.pyc
+*.bundle

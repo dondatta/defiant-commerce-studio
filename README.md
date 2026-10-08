@@ -4,6 +4,16 @@ Independent, multi-brand ecommerce creative studio for Defiant. Infatuation Appa
 
 The local milestone provides login, brand administration, Shopify-style catalog import, character/reference management, editable prompts, asynchronous OpenAI/ComfyUI jobs, daily candidate planning, review/regeneration, a date-grouped calendar, private assets and Instagram derivatives. Generated content is never automatically approved or published.
 
+## Docker development (recommended when using a Docker server)
+
+```bash
+python3 scripts/init_docker_env.py
+docker compose up --build -d
+docker compose exec web python manage.py createsuperuser
+```
+
+Python 3.12, PostgreSQL, web, worker and scheduler run in containers. Host Python 3.14 is supported for the configuration helper. Database/private assets persist in separate volumes. See [Docker commands and access](docs/DOCKER.md). This is a development stack; production deployment is separate.
+
 ## Run locally
 
 Python 3.12+, Chromium only for optional browser tests. Run these exact commands:
@@ -69,7 +79,7 @@ Optional real-browser smoke check, with the development web server already runni
 .venv/bin/python scripts/browser_smoke.py
 ```
 
-It uses `/usr/bin/chromium`, creates/removes a temporary account, verifies real login plus 12 routes, checks mobile overflow and JavaScript exceptions, and saves screenshots under `/tmp`. Provider/Shopify integration tests mock the external network boundary; live provider generation, real-store sync, PostgreSQL and S3 have not been exercised without credentials/infrastructure. No test-generated files or images are seeded as live brand content.
+It uses `/usr/bin/chromium`, creates/removes a temporary account, verifies real login plus 12 routes, checks mobile overflow and JavaScript exceptions, and saves screenshots under `/tmp`. Provider/Shopify integration tests mock the external network boundary; live provider generation, real-store sync and S3 have not been exercised without credentials/infrastructure. PostgreSQL migrations, tenant/history triggers and all 48 tests have also passed in Docker. No test-generated files or images are seeded as live brand content.
 
 ## First milestone boundaries
 
